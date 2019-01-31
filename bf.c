@@ -1,8 +1,9 @@
+#include <stddef.h>
 #include <stdio.h>
 
 FILE *pstream;
 unsigned char mem[0x10000];
-unsigned char *ptr = mem;
+size_t ptr;
 
 long skip()
 {
@@ -33,24 +34,26 @@ long exec()
 		switch (fgetc(pstream)) {
 			case '>':
 				++ptr;
+				ptr &= 0xffff;
 				break;
 			case '<':
 				--ptr;
+				ptr &= 0xffff;
 				break;
 			case '+':
-				++*ptr;
+				++mem[ptr];
 				break;
 			case '-':
-				--*ptr;
+				--mem[ptr];
 				break;
 			case '.':
-				putchar(*ptr);
+				putchar(mem[ptr]);
 				break;
 			case ',':
-				*ptr = getchar();
+				mem[ptr] = getchar();
 				break;
 			case '[':
-				if (*ptr) {
+				if (mem[ptr]) {
 					call();
 				} else {
 					skip();
