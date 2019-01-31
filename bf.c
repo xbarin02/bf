@@ -33,12 +33,10 @@ long exec()
 	while (1) {
 		switch (fgetc(pstream)) {
 			case '>':
-				++ptr;
-				ptr &= 0xffff;
+				ptr = (ptr + 1) % 0x10000;
 				break;
 			case '<':
-				--ptr;
-				ptr &= 0xffff;
+				ptr = (ptr - 1) % 0x10000;
 				break;
 			case '+':
 				++mem[ptr];
