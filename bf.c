@@ -74,7 +74,7 @@ void call()
 
 int main(int argc, char *argv[])
 {
-	if (argc - 1) {
+	if (argc > 1) {
 		pstream = fopen(argv[1], "r");
 	}
 
