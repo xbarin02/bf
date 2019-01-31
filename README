@@ -1,0 +1,5 @@
+A small Brainfuck interpreter in C
+==================================
+
+The interpreter is written in pure C89 and it has less than a hundred lines
+of code. Interestingly, it uses hardware call stack to handle nested blocks.
