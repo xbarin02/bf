@@ -1,11 +1,11 @@
-Brainfuck Self Interpreter: by Clive Gifford 
+Brainfuck Self Interpreter: by Clive Gifford
 
 Version 1: 01 December 2006 (one trip between code and data per op)
 Version 2: 16 December 2006 (virtual codes for various combinations)
 
 Credits
 
-A large section of code to load the input to the interpreter is copied 
+A large section of code to load the input to the interpreter is copied
 from the the 423 byte dbfi interpreter as described in the November 2003
 paper "A Very Small Interpeter" by Oleg Mazonka and Daniel B Cristofani
 
@@ -32,7 +32,7 @@ must always be followed by an exclamation mark and then any associated data
 Input can also include "comments" (if desired) except for exclamation mark
 
 If you are stacking multiple copies of this interpreter then each additional
-level also has to appear in the input with a trailing exclamation mark and 
+level also has to appear in the input with a trailing exclamation mark and
 then we finally have the input for the very top level to finish things off
 
 The underlying brainfuck machine determines the possible range of values in
@@ -73,7 +73,7 @@ Behaviour on end of input is also inherited from the next level down
   ]
 
  a three way switch to handle possibilities and adjust positioning
- 
+
   >[-]+<<                   set "done" flag and position to value
   [
     --                      2 means last decode was for a valid instruction
@@ -81,16 +81,16 @@ Behaviour on end of input is also inherited from the next level down
       [-]                   originally (meaning input should be ignored)
       >>- <<<+>             so all we do is set the "more input" flag
     ]
-    >> 
+    >>
     [
       -
       <<<<[>+<-]            for valid input move everything right one
 
- start of processing to find and recode certain combinations of codes   
+ start of processing to find and recode certain combinations of codes
 
-      +<<+                  set flags to indicate we want to process 
+      +<<+                  set flags to indicate we want to process
                             the last two instructions in the loop below
-      [                     
+      [
         ->                  clear flag and move to instruction
         [<+>>>>>>+<<<<<-]   double copy instruction and then
         <[>+<-]>>>>>>       restore original before moving to copy
@@ -131,7 +131,7 @@ Behaviour on end of input is also inherited from the next level down
 
       [
        -[
-         -[ 
+         -[
            -[
              -[
                -[
@@ -161,7 +161,7 @@ Behaviour on end of input is also inherited from the next level down
       [
         -
         <<<[>+>>+<<<-]>[<+>-]>>            copy third to last instruction
- 
+
  if it is the start of a loop then we can (in some cases)
  collapse the last three instructions to single virtual code
 
@@ -188,14 +188,14 @@ Behaviour on end of input is also inherited from the next level down
                                   -
                                   <+>         fall through & code as 16 (double skip left)
                                 ]<+++++++++++++>>[-]>->-<<   code as 15 (double skip right)
-                              ]                  
+                              ]
                             ]
                           ]>>[->>>>>]<<
                         ]>>[-<<<++++++++++++>>[-]>>-]<<      code as 14 (zero)
                       ]>>[->>>>>]<<
                     ]>>[-<<<+++++++++++>>[-]>>-]<<           code as 13 (skip left)
                   ]>>[-<<<++++++++++>>[-]>>-]<<              code as 12 (skip right)
-                ]                         
+                ]
               ]>>[->>>>>]<<
             ]
             <
@@ -204,14 +204,14 @@ Behaviour on end of input is also inherited from the next level down
         <<
       ]
       >>+>>>
-    ] 
+    ]
     <<
   ]
   >> [->+>] <<              end of input so clear "done" and set data mark and
                             finally position to a zero cell ready for next phase
-  
+
   <                         move to "more input" flag
-  
+
 ]
 
 <<[<<]>>                    go to the first instruction
@@ -247,7 +247,7 @@ Behaviour on end of input is also inherited from the next level down
                           >[->> [>>] >> [>>]< [<-<] <[<<] << [<<]]<  skip left (code 13)
                         ]
                         >[->> [>>] >> [>>]< [>+>] <[<<] << [<<]]<    skip right  (code 12)
-                      ] 
+                      ]
                       >[->> [>>] >> [>>]< <-<<-< <[<<] << [<<]]<  double move left (code 11)
                     ]
                     >[->> [>>] >> [>>] +>>+ [<<] << [<<]]<        double move right (code 10)
@@ -318,9 +318,9 @@ Behaviour on end of input is also inherited from the next level down
     >>[<<+>>-]
     <<[>>+<<-]+             This and the following achieves
     >>[<<->>-]<<            x = not x
-       
+
     <<                      so we now have (data) '(flag) (?) (not flag)
-    
+
     [                       if flag set then
       -<< [<<] << [<<]<     clear and return to code section where we save
       << << +               a 1 meaning we need (later) to match right bracket
@@ -329,9 +329,9 @@ Behaviour on end of input is also inherited from the next level down
 
     >>                      if we executed code above then now at switch flag
                             else it will put us ready to return from data area
-                          
+
     [-<<<<<<[<<]<<[<<]<]    move back to switch flag without setting anything
-    
+
     >
   ]
 
@@ -342,7 +342,7 @@ Behaviour on end of input is also inherited from the next level down
   *** The following code is to handle finding matching brackets       ***
   *** because code above has only set a cell value to 1 or 2 to show  ***
   *** what kind of loop scanning is required (1=scan left 2=right)    ***
-  
+
   << << <<                  position to cell showing if matching required
   [                         if non zero we need to find a matching bracket
     >> +                    set up "done" flag for switch and
