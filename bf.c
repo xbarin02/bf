@@ -69,7 +69,7 @@ long exec()
 
 void call()
 {
-	fseek(pstream, exec()-1, SEEK_SET);
+	fseek(pstream, exec() - 1, SEEK_SET);
 }
 
 int main(int argc, char *argv[])
